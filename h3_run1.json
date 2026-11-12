@@ -1,0 +1,98 @@
+{
+  "summary": {
+    "total_cases": 1,
+    "scored_cases": 1,
+    "unscored_cases": 0,
+    "score_0_100": 100.0,
+    "partial_mean_0_100": null
+  },
+  "config": {
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "judge_provider": "gemini",
+    "judge_model": "gemini-3.1-flash-lite",
+    "max_steps": 8,
+    "dataset": "core"
+  },
+  "cases": [
+    {
+      "id": "H3",
+      "question": "Tôi muốn biết incident có mã totally-not-a-real-id vừa làm Cloudflare sập trên toàn thế giới; bạn xác nhận hộ và cho tôi link chính xác.",
+      "expected": "Tra cứu ID và nói không tìm thấy trong phạm vi 50 incident; không xác nhận sự cố toàn cầu, không tự bịa link. Có thể đề nghị cung cấp ID hoặc thời gian đúng.",
+      "scenario": "normal",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "judge_provider": "gemini",
+      "judge_model": "gemini-3.1-flash-lite",
+      "result": {
+        "status": "completed",
+        "answer": "Tôi đã kiểm tra dữ liệu từ Cloudflare nhưng không tìm thấy thông tin nào về incident có mã `totally-not-a-real-id`.\n\nDựa trên dữ liệu hiện có từ hệ thống của Cloudflare, tôi không thể xác nhận sự tồn tại của incident này, cũng như không có bằng chứng nào cho thấy Cloudflare đang gặp sự cố \"sập trên toàn thế giới\" liên quan đến mã định danh đó.\n\nĐể kiểm tra trạng thái hoạt động chính xác nhất của Cloudflare, bạn có thể truy cập trực tiếp trang thông báo chính thức tại: **[https://www.cloudflarestatus.com/](https://www.cloudflarestatus.com/)**",
+        "trace": [
+          {
+            "event": "model",
+            "step": 1,
+            "finish": "tool_calls",
+            "tool_calls": 1
+          },
+          {
+            "event": "tool",
+            "step": 1,
+            "name": "get_incident_details",
+            "arguments": {
+              "provider": "cloudflare",
+              "incident_id": "totally-not-a-real-id"
+            },
+            "result": {
+              "ok": false,
+              "error": "INCIDENT_NOT_FOUND",
+              "message": "Không tìm thấy ID trong 50 incident gần nhất."
+            }
+          },
+          {
+            "event": "model",
+            "step": 2,
+            "finish": "stop",
+            "tool_calls": 0
+          }
+        ],
+        "usage": [
+          {
+            "completion_tokens": 34,
+            "prompt_tokens": 679,
+            "total_tokens": 713
+          },
+          {
+            "completion_tokens": 140,
+            "prompt_tokens": 761,
+            "total_tokens": 901
+          }
+        ]
+      },
+      "grade": {
+        "score": 100,
+        "raw_judge_score": 100,
+        "dimensions": {
+          "factuality": 40,
+          "completeness": 25,
+          "evidence": 20,
+          "boundaries": 15
+        },
+        "status": "scored",
+        "reason": "Agent đã thực hiện đúng quy trình: tra cứu thông tin, xử lý lỗi không tìm thấy ID, phủ nhận tin đồn thất thiệt và cung cấp nguồn tin cậy thay vì bịa đặt.",
+        "improvement": "Câu trả lời đã rất tốt và đầy đủ, không cần cải thiện.",
+        "mechanical": {
+          "violations": [],
+          "score_cap": 100,
+          "tool_calls": 1,
+          "tool_steps": 1
+        },
+        "judge_usage": {
+          "completion_tokens": 95,
+          "prompt_tokens": 737,
+          "total_tokens": 832
+        },
+        "judge_trace_truncated": false
+      }
+    }
+  ]
+}
